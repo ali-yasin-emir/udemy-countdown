@@ -31,12 +31,13 @@ export default function Player() {
 // Show text with useRef() method //
 
   const [editableName, setEditableName] = useState("Player")
+  const editableNameRef = useRef()
 
   const handleClick = () => {
     setEditableName(editableNameRef.current.value)
+    editableNameRef.current.value = ""
   }
 
-  const editableNameRef = useRef()
 
   return (
     <section id="player">

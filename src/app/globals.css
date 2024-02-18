@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Handjet:wght@400;700&display=swap');
 
 * {
@@ -118,7 +120,7 @@ header p {
   border-radius: 4px;
   background: #12352f;
   color: #edfcfa;
-  font-size: 1.2rem;
+  font-size: 1rem;
   cursor: pointer;
 }
 
@@ -157,9 +159,10 @@ header p {
   animation: slide-in-from-top 0.35s ease-out;
 }
 
+/* 
 .result-modal::backdrop {
   background: rgba(0, 0, 0, 0.9);
-}
+} */
 
 .result-modal h2 {
   font-family: 'Handjet', monospace;
