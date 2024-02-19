@@ -2,23 +2,35 @@
 
 import { forwardRef, useImperativeHandle, useRef } from "react";
 
+const Result = forwardRef(function Result(
+  { challengeTime, timeRemaining, onReset },
+  ref
+) {
+  const newDialog = useRef();
 
-const Result = forwardRef( function Result({ result, challengeTime }, ref){
-  
-  const newDialog = useRef()
+  const userLost = timeRemaining <= 0;
+  const formattedTimeRemaining = (timeRemaining / 1000).toFixed(2);
+  const score = Math.round((1 - timeRemaining / (challengeTime * 1000)) * 100);
 
-    useImperativeHandle(ref, () => {
-      return {
-        open(){
-          newDialog.current.showModal();
-        }
-      }
-    })
-
+  useImperativeHandle(ref, () => {
+    return {
+      open() {
+        newDialog.current.showModal();
+      },
+    };
+  });
 
   return (
-    <dialog ref={newDialog} className="result-modal backdrop:bg-[#000000e6]">
-      <h2 className="font-semibold text-black">YOUR SCORE: {result}</h2>
+    <dialog
+      onClose={onReset}
+      ref={newDialog}
+      className="result-modal backdrop:bg-[#000000e6]"
+    >
+      {userLost ? (
+        <h2>You lost</h2>
+      ) : (
+        <h2 className="font-semibold text-black">Your Score: {score}</h2>
+      )}
       <p className="text-black">
         The target time was{" "}
         <strong>
@@ -27,10 +39,13 @@ const Result = forwardRef( function Result({ result, challengeTime }, ref){
         .
       </p>
       <p className="text-black">
-        You stopped the timer with <strong>X seconds left</strong>.
+        You stopped the timer with{" "}
+        <strong>{formattedTimeRemaining} seconds left</strong>.
       </p>
-      <form method="dialog">
-        <button className="w-fit self-end">Close</button>
+      <form onSubmit={onReset} method="dialog">
+        <button type="submit" className="w-fit self-end">
+          Close
+        </button>
       </form>
     </dialog>
   );
@@ -38,11 +53,11 @@ const Result = forwardRef( function Result({ result, challengeTime }, ref){
 
 export default Result;
 
-  // const dialog = useRef();
-  // useImperativeHandle(ref, () => {
-  //   return {
-  //     open() {
-  //       dialog.current.showModal();
-  //     },
-  //   };
-  // });
+// const dialog = useRef();
+// useImperativeHandle(ref, () => {
+//   return {
+//     open() {
+//       dialog.current.showModal();
+//     },
+//   };
+// });
